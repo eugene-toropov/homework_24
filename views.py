@@ -1,4 +1,6 @@
-from flask import Blueprint, jsonify, request
+from typing import Tuple, Dict
+
+from flask import Blueprint, jsonify, request, Response
 from marshmallow import ValidationError
 
 from builder import build_query
@@ -8,7 +10,7 @@ main_bp = Blueprint('main', __name__)  # Создаем неймспейс
 
 
 @main_bp.route('/perform_query', methods=['POST'])
-def perform_query():
+def perform_query() -> Response | Tuple[Response, int]:
     """
     Представление по маршруту '/perform_query', метод = POST.
     Данные из запроса прогоняем через схему RequestSchema().
@@ -16,7 +18,7 @@ def perform_query():
     Данные из first_result прогоняем через вторую пару параметров -> result
     Возвращаем их пользователю в формате json.
     """
-    data = request.json
+    data: Dict = request.json
 
     try:
         RequestSchema().load(data)
