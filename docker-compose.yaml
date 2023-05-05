@@ -2,6 +2,8 @@ version: '3.3'
 
 services:
   web:
-    build: .
+    build:
+      context: .
+    image: eugenevrtx/hw26
     ports:
       - 10000:10000
