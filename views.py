@@ -45,3 +45,10 @@ def perform_query() -> Response | Tuple[Response, int]:
 @main_bp.route('/ping', methods=['GET'])
 def ping():
     return 'pong'
+
+
+@main_bp.route('/users', methods=['GET'])
+def get_users():
+    users = User.query.all()
+
+    return {'users': [user.to_json() for user in users]}

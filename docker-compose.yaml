@@ -2,8 +2,27 @@ version: '3.3'
 
 services:
   web:
-    build:
-      context: .
-    image: eugenevrtx/hw26
+    build: .
     ports:
       - 10000:10000
+    environment:
+      - DB_PASSWORD=db_password
+      - DB_USER=db_user
+      - DB_NAME=db_name
+      - DB_HOST=postgres_db
+    depends_on:
+      postgres_db:
+        condition: service_healthy
+  postgres_db:
+    image: postgres
+    ports:
+      - 5000:5432
+    environment:
+      - POSTGRES_PASSWORD=db_password
+      - POSTGRES_USER=db_user
+      - POSTGRES_DB=db_name
+    healthcheck:
+      test: /usr/bin/pg_isready
+      interval: 5s
+      timeout: 10s
+      retries: 50
