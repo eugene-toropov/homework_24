@@ -4,6 +4,7 @@ from flask import Blueprint, jsonify, request, Response
 from marshmallow import ValidationError
 
 from builder import build_query
+from db import User
 from models import RequestSchema
 
 main_bp = Blueprint('main', __name__)  # Создаем неймспейс
