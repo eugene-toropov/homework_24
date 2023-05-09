@@ -13,19 +13,21 @@ services:
     depends_on:
       postgres_db:
         condition: service_healthy
+
   postgres_db:
     image: postgres
     ports:
-      - 5438:5432
+      - 5432:5432
     environment:
-      - POSTGRES_HOST_AUTH_METHOD=trust
       - POSTGRES_PASSWORD=db_password
       - POSTGRES_USER=db_user
       - POSTGRES_DB=db_name
     healthcheck:
-      test: /usr/bin/pg_isready
+      test: /usr/bin/pg_isready -U db_user -d db_name
       interval: 5s
       timeout: 10s
       retries: 50
     volumes:
-      - ./postgres-data:/var/lib/postgresql/data
+      - postgres-data:/var/lib/postgresql/data
+volumes:
+  postgres-data:
