@@ -13,7 +13,6 @@ services:
     depends_on:
       postgres_db:
         condition: service_healthy
-
   postgres_db:
     image: postgres
     ports:
